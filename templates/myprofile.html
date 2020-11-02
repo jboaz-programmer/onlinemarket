@@ -1,0 +1,118 @@
+<div class="container" ng-controller="authCtrl">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">MY PROFILE</h4>
+
+            </div>
+
+        </div>
+       <div class="row" >
+        <div class="space-6"></div>
+        <div class="col-sm-10 col-sm-offset-1">
+            <div id="login-box" class="login-box visible widget-box no-border">
+                <div class="widget-body">
+                    <div class="widget-main">
+                    
+                        <div class="space-16"></div>
+                             UID: {{cache.sponsor_data[0].sponsorid}}{{uid}}
+                        <br/>U-NAME: {{name | eachword}}
+                        <br/>E-MAIL: {{email}}
+                        <br/>
+                        <a  class="pull-right">More Info</a>
+                       
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12 col-xl-8" >
+            <!-- {{userDetails_}} -->
+            <h4>Profile Details</h4>
+           <form name="profileForm" class="form-horizontal" role="form" ng-submit="changeProfile(userDetails_)">
+            <div class="form-group" ng-hide="!isPassChange">
+                <label class="col-sm-3 control-label no-padding-right" for="profile"> Full name : </label>
+                <div class="col-sm-7">
+                   <span class="block input-icon input-icon-right">
+                        <input type="text" class="form-control"  name="fname" ng-model="userDetails_.name" required />
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="form-group" ng-hide="!isPassChange">
+                <label class="col-sm-3 control-label no-padding-right" for="gender"> Gender :  </label>
+                <div class="col-sm-7">
+                   <span class="block input-icon input-icon-right">
+                        <input type="text" class="form-control" name="gender"  ng-model="userDetails_.gender" required/>
+                    </span>
+                </div>
+            </div> -->
+             <div class="form-group" ng-hide="!isPassChange">
+                <label class="col-sm-3 control-label no-padding-right" for="username"> Email : </label>
+                <div class="col-sm-7">
+                   <span class="block input-icon input-icon-right">
+                        <input type="text" class="form-control" name="username"  ng-model="userDetails_.email" required/>
+                    </span>
+                </div>
+            </div>
+
+             <div class="form-group" ng-hide="!isPassChange">
+                <label class="col-sm-3 control-label no-padding-right" for="phone"> Phone : </label>
+                <div class="col-sm-7">
+                   <span class="block input-icon input-icon-right">
+                        <input type="text" class="form-control" name="phone"  ng-model="userDetails_.phone" required/>
+                    </span>
+                </div>
+            </div>
+         
+             <div class="clearfix"></div>
+                <button  ng-hide="!isPassChange" class="width-35 pull-right btn btn-sm btn-primary" data-ng-disabled="profileForm.$invalid">
+                        <i class="ace-icon fa fa-pencil"></i>
+                         <span ng-show="!cache.profileSaving">Updates details</span>
+                        <span ng-show="cache.profileSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Updating details...</span></span>
+                     
+                    </button>
+            </form>
+
+        <form name="passChange" ng-submit="changePassword(userDetails_)">
+        <div class="row">  
+            <div class="form-group" ng-hide="isPassChange">
+                <input type="hidden" name="user_id" ng-model="userDetails_.uid" ng-hide="true" />
+                <label class="col-sm-4 control-label no-padding-right" for="email"> Old password: </label>
+                <div class="col-sm-4">
+                   <span class="block input-icon input-icon-right">
+                        <input type="password" class="form-control"  name="password" placeholder="Old password" ng-model="userDetails_.pass_word" required/>
+                           <span ng-show="cache.details_ =='false'" style="color:red"> Password not match </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group" ng-hide="isPassChange">
+                <label class="col-sm-4 control-label no-padding-right" for="password"> New password:  </label>
+                <div class="col-sm-4">
+                   <span class="block input-icon input-icon-right">
+                        <input type="password" class="form-control " name="r_password" placeholder="re-type password"  ng-model="userDetails_.r_password"  required/>
+                    </span>
+                </div>
+            </div>
+        </div>
+           
+         <div class="clearfix">
+                   <span><button  ng-hide="isPassChange" class="width-35 pull-right btn btn-sm btn-primary" data-ng-disabled="passChange.$invalid || cache.details_ =='false'" >
+                        <i class="ace-icon fa fa-key"></i>
+                        <span ng-show="!cache.passSaving">Updates password</span>
+                        <span ng-show="cache.passSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving password...</span></span></button> 
+                  </span>                       
+            </div>
+          </form>
+          
+                 <a href=""  class="width-35  text-info"  ng-click="ispasswordChange('edit')">
+                        <i class="ace-icon fa fa-pencil"></i>
+                        Edit detail
+                    </a> &nbsp; |
+                     &nbsp; <a  href="" class="width-35  text-info"  ng-click="ispasswordChange('pass')" >
+                        <i class="ace-icon fa fa-key"></i>
+                       Change password
+                 </a>
+         </div> 
+     </div>
+    </div>

@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="page-head-line">All members</h4>
+      <input type="text" class="form-control input-sm pull-right" style="width:30%;margin-top:-7em"
+        placeholder="Type here to search .." name="email" ng-model="search" required focus />
+    </div>
+
+  </div>
+
+  <div class="table-responsive">
+    <div style="max-height:{{getheight-60}}px;overflow:auto">
+      <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th style="width:15%">Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th style="text-align:center">Joining_fees</th>
+            <th style="text-align:center">Balance</th>
+            <th>Join Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in cache.allsponsors | filter:search track by $index">
+            <td>{{user.sponsorid}}{{user.uid}}</td>
+            <td>{{user.name | eachword}}</td>
+            <td ng-class="{'text-info':user.new_reg==0}">{{user.email | eachword}}</td>
+            <td ng-class="{'text-success':user.status=='1','text-danger':user.status=='0'}">
+              <select style="width:70%" ng-model="user.status" ng-change="changeProfile(user)">
+                <option value="1">active</option>
+                <option value="0">deactive</option>
+              </select>
+            </td>
+            <td style="text-align:right">{{user.joining_fees|number:2}}</td>
+            <td style="text-align:right">{{user.balance|number:2}}</td>
+            <td>{{c_date(user.created)}}</td>
+            <td>
+              <span ng-click="getData(user)"><a href="" data-toggle="modal" data-target="#deleteModal"
+                  data-backdrop="static" data-keyboard="false">Delete</a></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" style="text-align:center" ng-show="cache.allsponsors.length<=0">
+              <span ng-show="!cache.isLoadingSponsor"> <i class="fa fa-spinner fa-spin f14"></i> Loading...... </span>
+              <span ng-show="cache.isLoadingSponsor" class="text-danger"> No data founds </span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>ID</th>
+            <th style="width:15%">Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th style="text-align:center">Joining_fees</th>
+            <th style="text-align:center">Balance</th>
+            <th>Reg Date</th>
+            <th>Actions</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

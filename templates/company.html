@@ -1,0 +1,137 @@
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">Company profile</h4>
+
+            </div>
+
+        </div>
+     <div class="row" ng-show="hidePageNotClicked('company')">
+                <div style="position:absolute;right:10%;">
+                    <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                     ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                     ngf-resize="{width: 100, height: 100}"style="cursor:pointer">
+                     <img ng-show="!file" src="./assets/img/avatar.jpg" class="img-responsive img-thumbnail" width="100px" height="100px">
+                     <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="100px" height="100px">
+                    </div>
+                     <div></div>
+                   
+                </div>
+
+                 <form name="companyForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="email"> Company name : </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control"  name="c_name" remove-Qoutes placeholder="Company name" ng-model="cmp.cmp_name" required />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label no-padding-right" for="Address"> Company Address :  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="Address" remove-Qoutes placeholder="Company address"  ng-model="cmp.cmp_addr" required/>
+                            </span>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="address"> Phone number :  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="address" remove-Qoutes placeholder="Enter phone numbers" ng-model="cmp.cmp_phone" required/>
+                            </span>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="message"> Customer message :  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="message" remove-Qoutes placeholder="Enter Customer message" ng-model="cmp.saltation" required/>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                       <button id="updProfile" class="btn btn-sm btn-primary pull-right"  ng-click="saveProfile(cmp)"  ng-disabled="companyForm.$invalid">Create profile</button> 
+                    </div>
+                </form>
+                <a ng-click="clickedPage('companyMore')" href="">More Info</a>
+        </div>
+
+          <div class="row" ng-show="hidePageNotClicked('companyMore')" >
+              <div style="position:absolute;right:10%;">
+                <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                     ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                     ngf-resize="{width: 100, height: 100}"style="cursor:pointer">
+                     <img ng-show="!file" src="./assets/img/avatar.jpg" class="img-responsive img-thumbnail" width="100px" height="100px">
+                     <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="100px" height="100px">
+                    </div>
+             </div>
+               <div class="padding" >
+                    <form name="EmailForm" class="form-horizontal" role="form" >
+                    <div ng-show="!isNext">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="email"> Valid gmail address: </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="email" class="form-control"  name="cm_name" remove-Qoutes placeholder="Email Address (gmail)" ng-model="cmp.Email_address" required />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label no-padding-right" for="Address"> Valid pass:  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="password" class="form-control passCheck" remove-Qoutes name="pass1" id="pw1" placeholder="Email password"  ng-model="cmp.email_password" ng-change="pwCheck(cmp.email_password,cmp.email_password2)" required/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                      <label class="col-sm-3 control-label no-padding-right" for="Address"> Verify pass:  </label>
+                        <div class="col-sm-7" ng-class="{'has-error': !pwmatch && cmp.email_password2.length >'0'}">
+                           <span class="block input-icon input-icon-right">
+                                <input type="password" class="form-control passCheck" remove-Qoutes name="pass2" id="pw2" placeholder="Re-enter password"  ng-model="cmp.email_password2" ng-change="pwCheck(cmp.email_password,cmp.email_password2)" required/>
+                                   <span ng-show="!pwmatch && cmp.email_password2.length >'0'" style="color:red"> Password not match </span>
+                            </span> 
+                        </div>
+                    </div>
+                    </div>
+                    <div ng-show="!isNext">
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="address"> Subject  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="address" placeholder="Enter phone numbers" ng-model="cmp.subject_mail" required/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="message"> Init message :  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="message" remove-Qoutes placeholder="Enter Customer message" ng-model="cmp.init_mssage" required/>
+                            </span>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="message"> Greetings  </label>
+                        <div class="col-sm-7">
+                           <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" name="message" remove-Qoutes placeholder="Enter Customer greetings" ng-model="cmp.greetings_mail" required/>
+                            </span>
+                        </div>
+                    </div>
+                     </div>
+                    <div>
+                       <button id="updProfile" class="btn btn-sm btn-primary pull-right" ng-show="!isNext" ng-click="saveProfile(cmp)"  ng-disabled="EmailForm.$invalid">
+                          <span ng-show="!isSaving"> Create </span>
+                          <span ng-show="isSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving account...</span></span></button> 
+                    </div>
+                   
+                    </form>
+                  </div>
+                  <a ng-click="clickedPage('company')" href="">Back</a>
+
+        </div>  
+    </div>

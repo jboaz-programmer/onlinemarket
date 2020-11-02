@@ -1,0 +1,1475 @@
+
+<div ng-controller="authCtrl">
+
+  <div class="modal fade" id="deleteModal"  role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete dialog</h4>  
+      </div>
+      <form name="deleteForm" ng-submit="changeDelete(cache.clickedData);hideModal('#deleteModal')">
+       <div class="modal-body">
+            <div class="row">
+               <div class="padding">
+                 <!-- {{cache.clickedData}} -->
+                <span class="text-danger text-center" > Sure want to delete Customer ID:</span><span> {{cache.clickedData.sponsorid}}{{cache.clickedData.uid}} ?</span>
+               </div>
+          </div>
+        </div>  
+    
+        <div class="modal-footer">
+          <button type="submit" id="deleteclient" class="btn btn-danger" > 
+            <sapn ng-show="!cache.userdeleting"> Delete</sapn>
+            <span ng-show="cache.userdeleting"> <i class="fa fa-spinner fa-spin"></i> <span> Deleting ...</span></span></button></button></button>
+          <button type="button" class="btn btn-primary"  data-dismiss='modal'>Cancel</button>
+        </div>
+      </form>
+    </div> 
+     </div>        
+  </div>
+
+  <div class="modal fade" id="loadingModal"  role="dialog">
+      <div class="modal-dialog" style="margin-top:20%">
+        <div class="modal-content">
+           <div class="modal-body">
+                <div class="row">
+                   <div class="padding " style="text-align:center">
+                      <i class="fa fa-mark "></i>  Done !
+                  </div>
+            </div> 
+       </div>
+     </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteClassModal"  role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Delete dialog</h4>  
+          </div>
+          <form name="deleteForm" ng-submit="deleteEvent('deleteClass',cache.clickedData);hideModal('#deleteClassModal')">
+           <div class="modal-body">
+                <div class="row">
+                   <div class="padding">
+                    <span class="text-danger text-center" > Sure want to delete {{cache.clickedData.type}} ID:</span><span ng-hide="isConfirm"> 0{{cache.clickedData.class_id}} ?</span>
+                   </div>
+              </div>
+            </div>  
+        
+            <div class="modal-footer">
+              <button type="submit" id="deleteclass" class="btn btn-danger" >
+                  <span ng-show="!cache.classdeleting"> Delete</span>
+                  <span ng-show="cache.classdeleting"> <i class="fa fa-spinner fa-spin"></i> <span> Deleting ...</span></span></button>
+              <button type="button" class="btn btn-primary"  data-dismiss='modal'>Cancel</button>
+            </div>
+          </form>
+        </div> 
+         </div>        
+      </div>
+
+      <div class="modal fade" id="deleteSubjectModal"  role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Delete dialog</h4>  
+              </div>
+              <form name="deleteForm" ng-submit="deleteEvent('deleteSubjects',cache.clickedData);hideModal('#deleteSubjectModal')">
+               <div class="modal-body">
+                    <div class="row">
+                       <div class="padding">
+                        <span class="text-danger text-center" > Sure want to delete Subject Name:</span><span ng-hide="isConfirm"> {{cache.clickedData.subject_name | eachword}} ?</span>
+                       </div>
+                  </div>
+                </div>  
+            
+                <div class="modal-footer">
+                  <button type="submit" id="deleteSubject" class="btn btn-danger" >
+                      <span ng-show="!cache.classSubject"> Delete</span>
+                      <span ng-show="cache.classSubject"> <i class="fa fa-spinner fa-spin"></i> <span> Deleting ...</span></span></button>
+                  <button type="button" class="btn btn-primary"  data-dismiss='modal'>Cancel</button>
+                </div>
+              </form>
+            </div> 
+             </div>        
+          </div>
+
+          <div class="modal fade" id="deletestudentModal"  role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete dialog</h4>  
+                </div>
+                <form name="deleteForm" ng-submit="deleteEvent('deleteStudents',cache.clickedData);loadStudents(ChildViewPage);hideModal('#deletestudentModal')">
+                 <div class="modal-body">
+                      <div class="row">
+                         <div class="padding">
+                          <span class="text-danger text-center" > Sure want to delete Student No:</span> <span ng-hide="isConfirm"> S-0{{cache.clickedData.students_no}} ?</span>
+                         </div>
+                    </div>
+                  </div>  
+              
+                  <div class="modal-footer">
+                    <button type="submit" id="deleteStudent" class="btn btn-danger" >
+                        <span ng-show="!cache.deleteStudent"> Delete</span>
+                        <span ng-show="cache.deleteStudent"> <i class="fa fa-spinner fa-spin"></i> <span> Deleting ...</span></span></button>
+                    <button type="button" class="btn btn-primary"  data-dismiss='modal'>Cancel</button>
+                  </div>
+                </form>
+              </div> 
+               </div>        
+            </div>
+          
+
+      <div class="modal fade" id="editClassModal"  role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Edit dialog</h4>  
+              </div>
+              <form name="editclassForm" ng-submit="updatesEvent('updClass',cache.clickedData);hideModal('#editClassModal')">
+               <div class="modal-body">
+                       <div class="padding">
+                              <div class=" row form-group">
+                                  <label class="col-sm-3 control-label no-padding-right" for="class"> {{cache.clickedData.type}} Name </label>
+                                  <div class="col-sm-7">
+                                     <span class="block input-icon input-icon-right">
+                                          <input type="text" class="form-control" placeholder="{{cache.clickedData.type}} Name" name="class" ng-model="cache.clickedData.class_name" required focus/>
+                                          <!-- <i class="ace-icon fa fa-user"></i> -->
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="row form-group">
+                                  <label class="col-sm-3 control-label no-padding-right" for="status"> Status</label>
+                                  <div class="col-sm-7">
+                                     <span class="block input-icon input-icon-right">
+                                          <input type="text" class="form-control" placeholder="Status" ng-model="cache.clickedData.status" required/>
+                                          <!-- <i class="ace-icon fa fa-lock"></i> -->
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="row form-group">
+                                  <label class="col-sm-3 control-label no-padding-right" for="password"> Desription</label>
+                                  <div class="col-sm-7">
+                                     <span class="block input-icon input-icon-right">
+                                        <textarea class="form-control input-sm" name="descr" rows="3" cols="30" placeholder="Write descriptions" ng-model="cache.clickedData.description" required></textarea>
+                                      </span>
+                                  </div>
+                              </div>
+                       </div>
+                </div>  
+            
+                <div class="modal-footer">
+                  <button type="submit" id="editclass" class="btn btn-primary" ng-disabled="editclassForm.$invalid" >
+                      <sapn ng-show="!cache.classSaving"> Save changes </sapn>
+                      <span ng-show="cache.classSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span></button>
+                  <button type="button" class="btn btn-info"  data-dismiss='modal'>Close</button>
+                </div>
+              </form>
+            </div> 
+             </div>        
+          </div>
+
+          <div class="modal fade" id="editSubjectModal"  role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Edit dialog</h4>  
+                  </div>
+                  <form name="editsubjectForm" ng-submit="updatesEvent('updSubject',cache.clickedData);hideModal('#editSubjectModal')">
+                   <div class="modal-body">
+                           <div class="padding">
+                                  <div class=" row form-group">
+                                      <label class="col-sm-3 control-label no-padding-right" for="class"> Subject Name </label>
+                                      <div class="col-sm-7">
+                                         <span class="block input-icon input-icon-right">
+                                              <input type="text" class="form-control" placeholder="Subject Name" name="subject" ng-model="cache.clickedData.subject_name" required focus/>
+                                              <!-- <i class="ace-icon fa fa-user"></i> -->
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div class=" row form-group">
+                                      <label class="col-sm-3 control-label no-padding-right" for="Class Name"> Class Name </label>
+                                      <div class="col-sm-7">
+                                         <span class="block input-icon input-icon-right">
+                                              <!-- <input type="text" class="form-control" placeholder="Class Name" name="class" ng-model="cache.clickedData.class_type" required/> -->
+                                              <!-- <i class="ace-icon fa fa-user"></i> -->
+                                              <select class="form-control" ng-model="cache.clickedData.class_type" ng-change="returnValue(cache.clickedData.class_type)">
+                                                <option value="All class">All class</option>
+                                                <option ng-repeat="streem in cache.allClass track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                              </select>
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div class=" row form-group">
+                                      <label class="col-sm-3 control-label no-padding-right" for="Streem Name"> Streem Name </label>
+                                      <div class="col-sm-7">
+                                         <span class="block input-icon input-icon-right">
+                                              <!-- <input type="text" class="form-control" placeholder="Subject Name" name="subject" ng-model="cache.clickedData.streem_name" required/> -->
+                                              <!-- <i class="ace-icon fa fa-user"></i> -->
+                                              <select class="form-control" ng-model="cache.clickedData.streem_name" ng-change="returnValue(cache.clickedData.streem_name)">
+                                                  <option value="All">All</option>
+                                                <option ng-repeat="streem in cache.allStreem track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                              </select>
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div class="row form-group">
+                                      <label class="col-sm-3 control-label no-padding-right" for="Points">Points</label>
+                                      <div class="col-sm-7">
+                                         <span class="block input-icon input-icon-right">
+                                              <input type="text" class="form-control" placeholder="Subject points" ng-model="cache.clickedData.status" required/>
+                                              <!-- <i class="ace-icon fa fa-lock"></i> -->
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div class="row form-group">
+                                      <label class="col-sm-3 control-label no-padding-right" for="Desription"> Desription</label>
+                                      <div class="col-sm-7">
+                                         <span class="block input-icon input-icon-right">
+                                            <textarea class="form-control input-sm" name="descr" rows="3" cols="30" placeholder="Write descriptions" ng-model="cache.clickedData.description"></textarea>
+                                          </span>
+                                      </div>
+                                  </div>
+                           </div>
+                    </div>  
+                
+                    <div class="modal-footer">
+                      <button type="submit" id="editclass" class="btn btn-primary" ng-disabled="editsubjectForm.$invalid">
+                          <sapn ng-show="!cache.classSaving"> Save changes </sapn>
+                          <span ng-show="cache.classSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span></button>
+                      <button type="button" class="btn btn-info"  data-dismiss='modal'>Close</button>
+                    </div>
+                  </form>
+                </div> 
+          </div>        
+  </div>
+
+  <div class="modal fade" id="loadingModal"  role="dialog" style="margin-top:50%">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="padding">
+              <progress class="progress is-small " value="70" max="100">70% </progress>
+          </div>
+        </div> 
+      </div>        
+  </div>
+
+  <div class="modal fade" id="dateModal"  role="dialog" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-click="hideModal(modalToshow)">
+        <button type="button" class="close"  data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Custom date setting</h4>  
+      </div>
+      <form name="dateForm" ng-submit="changeDate()">
+       <div class="modal-body">
+            <div class="row">
+               <div class="padding">
+                <div class="form-group col-sm-12 col-md-12">
+                        <label class="col-sm-4 control-label no-padding-right" for="to">Select Date </label>
+                        <div class="col-sm-6">
+                           <div datepicker datepicker-class="test-custom-class" date-min-limit="2000/01/01" date-max-limit="2030/12/31" date-typer="true">
+                             <input ng-model="date_" type="text" class="angular-datepicker-input form-control" placeholder="Select date"  ng-change="onChangeDate(date_);"/>
+                          </div>
+                        </div>
+                    </div>
+
+                     <label>Date selected </label> <h3 class="text-info">{{date_}}</h3>
+               </div>
+          </div>
+        </div>  
+    
+        <div class="modal-footer">
+          <!--<button type="submit" id="dateclient" class="btn btn-primary" >Set date</button>-->
+          <span class="btn btn-link" data-dismiss="modal"><button type="button" class="btn btn-default"  ng-click="hideModal(modalToshow)">Close</button></span>
+        </div>
+      </form>
+    </div> 
+     </div>        
+  </div>
+
+  <div class="modal fade" id="bankModal" role="dialog">
+    <div class="modal-dialog" style="min-width:{{getwidth-200}}px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"  data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Bank Details</h4>  
+        </div>
+        <div class="padding"><small>Create Account(s)</small>
+           <span class="pull-right">
+            <select class="form-control input-sm"  ng-model="cache.account.bankType" ng-change="getValueReturns(cache.account.bankType);">
+              <option>-select-</option>
+              <option>Bank</option>
+              <option>Mobile</option>
+              <option>Others</option>
+            </select>
+           </span>
+           <span class="pull-right" style="margin-right:3px">  Bank Type : </span>
+        </div>
+
+        <form name="addBankForm">
+         <div class="modal-body">
+          <div class="row">
+            <div>
+               <div class="form-group col-sm-12 col-md-12">
+                  <div class="col-sm-6" ng-class="{'has-error': cache.bankNameIsExist.length==1}">
+                        <label>Bank Name</label>
+                          <input ng-model="cache.account.bank_name" remove-Qoutes type="text" class="form-control input-sm" placeholder="Enter bank name" ng-change="isBankNameExist(cache.account.bank_name)" required/>
+                          <div ng-show="cache.bankNameIsExist.length==1" style="position:absolute;">
+                              <span class="text-danger">Bank name already exist</span>
+                           </div>
+                    </div>
+                    <div class="col-sm-6">
+                          <label>Bank Account</label>
+                        <input ng-model="cache.account.bank_acc" remove-Qoutes type="text" class="form-control input-sm" placeholder="Enter bank Account" required/>
+                    </div>
+                 </div>
+                 <div class="form-group col-sm-12 col-md-12">
+                   <div class="col-sm-6">
+                      <label>Account name</label>
+                       <input ng-model="cache.account.acc_name" remove-Qoutes type="text" class="form-control input-sm" placeholder="Enter Account name"  required/>
+                   </div>
+                   <div class="col-sm-6">
+                     <label>Balance</label>
+                     <input ng-model="cache.account.balance" remove-Qoutes only-Digits type="text" class="form-control input-sm" placeholder="Enter balance" required/>
+                   </div>
+              </div>
+                 <!-- <div ng-show="cache.bankNameIsExist.length==1" style="position:absolute;top:30%;left:30%">
+                   <span class="text-danger">Bank name already exist</span>
+                </div> -->
+            </div>
+            <button type="button" ng-if="!cache.clickedDetails"  ng-click="addBankName(cache.account)" class="btn btn-info pull-right" ng-disabled="cache.bankNameIsExist.length==1 || cache.account.bankType=='-select-'">Add</button>
+            <button type="button" ng-if="cache.clickedDetails" ng-click="updBankName(cache.account)" class="btn btn-info pull-right" ng-disabled="cache.bankNameIsExist.length==1 || cache.account.bankType=='-select-'">Update</button>
+         </div>
+
+            <div class="row">
+                <div class="padding">
+                   <h5>Bank(s) List</h5>
+                 <div class="col-sm-12 col-md-12">
+                   <div class="table-responsive">
+                      <table class="table table-hovered table-striped" cellpadding="0" cellspacing="0" >
+                          <thead ng-show="cache.banknames">
+                            <tr>
+                              <th>S.no</th>
+                              <th>Bank Name</th>
+                              <th>Bank Acc</th>
+                              <th>Acc Name</th>
+                              <th>Balance</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                      </table>
+                      <div  style="max-height:{{getheight-400}}px;overflow:auto;">
+                   <table class="table table-hovered table-striped">
+                     <tbody>
+                       <tr ng-show="cache.banknames" ng-repeat="bank in cache.banknames track by $index">
+                         <td >{{$index+1}}</td>
+                         <td >{{bank.bank_name}}</td>
+                         <td >{{bank.bank_acc}}</td>
+                         <td >{{bank.acc_name | eachword}}</td>
+                         <td style="text-align:right">{{bank.balance | number:2}}</td>
+                         <td style="text-align:right"><a href="" title="Click to Delete" ng-click="DeleteBank(bank)"><i class="fa fa-remove text-danger"></i></a> &nbsp;&nbsp;
+                          <a href="" title="Click to Edit" ng-click="getBankName(bank);"><span><i class="fa fa-pencil text-info"></i></a>
+                        </td>
+                       </tr>
+                       <tr ng-show="cache.banknames.length <= 0">
+                         <td colspan="2" style="text-align:center"> <span class="text-danger" > No bank list founds</span></td>
+                       </tr>
+ 
+                     </tbody>
+ 
+                   </table>
+                   </div>
+                        
+                   </div>
+                  </div>
+                </div>
+           </div>
+          </div> 
+          <div class="modal-footer">
+            <!--<button type="submit" id="dateclient" class="btn btn-primary" >Set date</button>-->
+            <span class="btn btn-link"><button type="button" class="btn btn-default"  ng-click="hideModal('#bankModal');">Close</button></span>
+          </div>
+        </form>
+      </div> 
+       </div>        
+    </div>
+
+ <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-xl" style="min-width:{{getwidth}}px">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">Clients Details
+          <span class="pull-right"><label ng-show="cur_date_==today_" > Today : &nbsp;&nbsp;</label>  
+            <label ng-show="cur_date_ !=today_" style="font-size:12px">  Date selected : &nbsp;&nbsp;</label> <span class="text-info">{{cur_date_}}</span> 
+            <span class="btn btn-link" data-dismiss="modal"> <a href="" data-toggle="modal" data-target="#dateModal">Change</a></span>
+            <input type="hidden" ng-model="cur_date_">
+            </span>
+            </h4>
+      </div>
+        <form name="addClientForm" ng-submit="newclients(data)" novalidate ng-mouseenter="onMouseEnter()">
+         <div class="modal-body" style="max-height:{{getheight}}px;overflow:auto;">
+               
+               <div class="row" ng-show="!cache.showMore">
+                 <h4>Person Details</h4>
+                 <div class="padding col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                  <div  ng-class="{ 'has-error' : addClientForm.client_id.$invalid && !addClientForm.client_id.$pristine }">
+                     <label>Client ID</label>
+                    <input type="text" name="client_id"  ng-model="data.clientID" placeholder="Client ID" class="form-control input-sm" disabled required/>
+                     <input type="hidden" name="client_acc"  ng-model="data.client_acc" placeholder="Client ID" class="form-control input-sm" disabled required/>
+                      <p ng-show="addClientForm.client_id.$invalid && !addClientForm.client_id.$pristine" class="help-block abs">Client ID is required.</p>
+                  </div>
+                  <div  ng-class="{'has-error' : addClientForm.fname.$invalid && !addClientForm.fname.$pristine }">
+                      <label>First Name</label> 
+                      <input type="text" name="fname" remove-Qoutes ng-model="data.first_name" placeholder="First Name" class="form-control input-sm" required  ng-change="filterclientsDetails(data.first_name)"/>
+                       <p ng-show="addClientForm.fname.$invalid && !addClientForm.fname.$pristine" class="help-block abs">First name is required.</p>
+                   </div>
+                   <div  ng-class="{'has-error' : addClientForm.lname.$invalid && !addClientForm.lname.$pristine }">
+                      <label>Last Name</label>
+                         <input type="text" name="lname" remove-Qoutes ng-model="data.last_name" placeholder="Last name" class="form-control input-sm" required ng-change="filterclientsDetails(data.last_name)"/>
+                         <span ng-show="addClientForm.lname.$invalid && !addClientForm.lname.$pristine" class="help-block abs">You name is required.</span>
+                     </div>
+                     <div  ng-class="{'has-error' : addClientForm.gender.$invalid && !addClientForm.gender.$pristine }">
+                        <label>Gender </label>
+                        <select class="form-control input-sm" ng-options="item for item in genders" ng-model="data.m_gender" ng-change="getValuegender(data.m_gender )">
+                         </select>
+                         <p ng-show="addClientForm.gender.$invalid && !addClientForm.gender.$pristine" class="help-block abs">Gender is required.</p>
+                    </div>
+                    <div >
+                       <label>Marital </label>
+                     <select class="form-control input-sm" ng-options="item for item in maritals" ng-model="data.m_status" ng-change="getValueMarital(data.m_status)">
+                     </select>
+                    </div>
+                    </div>
+                    
+                    <div class="padding" style="margin-top:5%">
+                        <h4 class="text-info" style="text-align:center">Contacts Details</h4>
+                        <div class="padding">
+                            <div class="padding">
+                          <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : addClientForm.phone.$invalid && !addClientForm.phone.$pristine }">
+                            <label>Phone number</label>
+                              <input type="text" name="phone" only-Digits ng-model="data.phone" placeholder="Phone" class="form-control input-sm" ng-minlength="9" ng-maxlength="12" required />
+                               <span ng-show="addClientForm.phone.$error.minlength" class="help-block abs">phone number is too short.</span>
+                               <span ng-show="addClientForm.phone.$error.maxlength" class="help-block abs">phone number is too long.</span>
+                           </div>
+                           <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{ 'has-error' : addClientForm.email.$invalid && !addClientForm.email.$pristine }">
+                              <label>Email</label>
+                               <input type="email" name="email" remove-Qoutes ng-model="data.email" placeholder="Email" class="form-control input-sm" />
+                              <p ng-show="addClientForm.email.$invalid && !addClientForm.email.$pristine" class="help-block abs">Enter a valid email.</p>
+                          </div>
+                        </div>
+                        </div>
+          
+                    </div>
+                             
+                </div>  
+
+              <section id="more_details" >
+              <div class="row" > 
+                   <span  ng-show="!cache.showMore"  ng-click="showMoreDetails(false)"><button type="button" class="btn btn-link" id="more">More Details</button></span>
+                   <span ng-show="cache.showMore" ng-click="showMoreDetails(true)"><button type="button" class="btn btn-link">Back</button></span>
+                 <div class="padding" ng-hide="!cache.showMore">
+                  <!-- <hr/> -->
+                   <div class="padding col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" >
+                      <h5 >Other Details</h5>
+                      
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                    <label>Location</label>
+                        <input type="text" name="location" remove-Qoutes ng-model="data.location" placeholder="Location" class="form-control input-sm" />
+                      
+                   </div>
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                      <label>Work Station</label>
+                       <input type="text" name="work" remove-Qoutes ng-model="data.work_station" placeholder="Work station" class="form-control input-sm" />
+                  </div>
+                  
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" >
+                      <label>Check No.</label>
+                          <input type="text" name="checkNo" ng-model="data.checkNo" placeholder="Check no" class="form-control input-sm" />           
+                     </div>
+                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                        <label>Joining_fees</label>
+                           <input type="text" name="joining_fees" only-Digits ng-model="data.joining_fees" placeholder="Joining Fees" class="form-control input-sm" />
+                    </div>
+    
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                        <label>Photo</label>
+                         <input type="file" name="photo" id="photo" file-Model="clientPhoto" class="form-control input-sm">
+                  </div>
+                   
+                  </div> 
+
+                  <div class="padding col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" >
+                      <h4 class="text-info">Bank Details</h4>
+                   <div class="col-sm-3 col-md-3 col-lg-3 col-xs-4 col-xl-3">
+                    <label>Back name</label>
+                        <!-- <input type="text" name="location" remove-Qoutes ng-model="data.location" placeholder="Location" class="form-control input-sm" /> -->
+                   </div>
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                      <select class="full-size form-control" id="bank" ng-model="bank_name_acc" style="width:100%;border:none" ng-change="getNewArray(bank_name_acc,cache.results)">
+                         <option></option>
+                         <option ng-repeat="item in cache.banknames" value="{{item.bank_name}}" >{{item.bank_name}}</option>
+                       </select> 
+                  </div>
+                  <span class="pull-right" ng-show="loginDetails[0].role =='Manager' || loginDetails[0].role =='Director'" ng-click="hideModal('#myModal')"><button type="button" class="btn btn-info " data-toggle="modal" data-target="#bankModal" data-backdrop="static" data-keyboard="false" >New</button></span>
+                
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12 alert alert-info" ng-show="cache.results.length>=1">
+                       <table style="width:100%">
+                         <tbody>
+                              <tr ng-repeat="banklist in cache.results">
+                                <td>
+                                    <label>{{banklist.bname}} </label>
+                                </td>
+                                <td colspan="2" style="margin-left:10%;width:50%">
+                                    <input type="text" remove-Qoutes ng-model="banklist.bname_no" placeholder="Enter {{banklist.bname}} bank number" class="form-control input-sm" />
+                                </td>
+                                <td title="Remove from list">
+                                  <span style="margin-left:20%;"><span class="btn btn-default" ng-click="removeFromList(banklist,cache.results)"><i class="fa fa-minus text-danger"></i></span></span>
+                                </td>
+                              </tr>
+                         </tbody>
+                      </table>
+                 </div> 
+
+                </div> 
+                  
+                </div>
+               
+              </div>
+              </section>
+              
+           </div>
+          <div class="modal-footer" ng-mouseleave="onMouseEnter()">
+            <button type="submit" id="newclients" class="btn btn-primary" ng-disabled="addClientForm.$invalid" ng-show="!cache.hideOnExist">
+              <sapn ng-show="!isSaving"> Save client </sapn>
+              <span ng-show="isSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+            </button>
+            <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>         
+  </div>
+
+
+
+ <div class="modal fade" id="editModal" role="dialog">
+  <div class="modal-dialog modal-xl" style="min-width:{{getwidth}}px">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Updates Clients Details</h4>
+      </div>
+        <form name="editClientForm" ng-submit="Updates(clickedDetails)" novalidate>
+         <div class="modal-body" style="max-height:{{getheight}}px;overflow:auto;">
+         
+               <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.fname.$invalid && !editClientForm.fname.$pristine }">
+                    <label>First Name</label>
+                      <input type="hidden" name="client_id" remove-Qoutes  ng-model="clickedDetails.client_acc" placeholder="Client ID" class="form-control input-sm" disabled required/>
+                      <input type="text" name="fname" ng-model="clickedDetails.first_name" placeholder="First Name" class="form-control input-sm" required />
+                       <p ng-show="editClientForm.fname.$invalid && !editClientForm.fname.$pristine" class="help-block abs">First name is required.</p>
+                   </div>
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.lname.$invalid && !editClientForm.lname.$pristine }">
+                    <label>Last Name</label>
+                       <input type="text" name="lname" remove-Qoutes ng-model="clickedDetails.last_name" placeholder="Last name" class="form-control input-sm" required />
+                       <span ng-show="editClientForm.lname.$invalid && !editClientForm.lname.$pristine" class="help-block abs">You name is required.</span>
+                   </div>
+                </div>  
+
+                 <div class="row"> 
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.phone.$invalid && !editClientForm.phone.$pristine }">
+                    <label>Phone number</label>
+                      <input type="text" name="phone" only-Digits ng-model="clickedDetails.phone" placeholder="Phone" class="form-control input-sm" ng-minlength="9" ng-maxlength="12" required />
+                       <span ng-show="editClientForm.phone.$error.minlength" class="help-block abs">phone number is too short.</span>
+                       <span ng-show="editClientForm.phone.$error.maxlength" class="help-block abs">phone number is too long.</span>
+                   </div>
+                   <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.joining_fees.$invalid && !editClientForm.joining_fees.$pristine }">
+                    <label>Joining_fees</label>
+                       <input type="text" name="joining_fees" only-Digits ng-model="clickedDetails.joining_fees" placeholder="Joining Fees" class="form-control input-sm" required />
+                       <p ng-show="editClientForm.joining_fees.$invalid && !editClientForm.joining_fees.$pristine" class="help-block abs">Joining fees is required.</p>
+                   </div>
+                 </div>
+
+              <div class="row"> 
+                 <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.location.$invalid && !editClientForm.location.$pristine }">
+                    <label>Location</label>
+                        <input type="text" name="location" remove-Qoutes ng-model="clickedDetails.location" placeholder="Location" class="form-control input-sm" required />
+                       <p ng-show="editClientForm.location.$invalid && !editClientForm.location.$pristine" class="help-block abs">Location is required.</p>
+                   </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{ 'has-error' : editClientForm.email.$invalid && !editClientForm.email.$pristine }">
+                    <label>Email</label>
+                     <input type="email" name="email" ng-model="clickedDetails.email" placeholder="Email" class="form-control input-sm" />
+                    <p ng-show="editClientForm.email.$invalid && !editClientForm.email.$pristine" class="help-block abs">Enter a valid email.</p>
+                </div>
+              </div>
+
+               <div class="row"> 
+                  <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6" ng-class="{'has-error' : editClientForm.gender.$invalid && !editClientForm.gender.$pristine && !getValuegender(data.g_selected) }">
+                     <label>Gender </label>
+                     <select class="form-control input-sm" ng-options="item for item in genders" ng-model="data.g_selected" ng-change="getValuegender(data.g_selected)">
+                      </select>
+                      <p ng-show="editClientForm.gender.$invalid && !editClientForm.gender.$pristine && !getValuegender(data.g_selected)" class="help-block abs">Gender is required.</p>
+                 </div>
+                 <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                    <label>Marital </label>
+                  <select class="form-control input-sm" ng-options="item for item in maritals" ng-model="data.s_selected" ng-change="getValueMarital(data.s_selected)">
+                  </select>
+                 </div>
+               </div>
+                <div class="row"> 
+                 <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                    <label>Work Station</label>
+                     <input type="text" name="work" remove-Qoutes ng-model="clickedDetails.work_station" placeholder="Work station" class="form-control input-sm" />
+                </div>
+                
+                 <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12 col-xl-6">
+                    <label>Check No.</label>
+                        <input type="text" name="checkNo" remove-Qoutes ng-model="clickedDetails.Check_no" placeholder="Check no" class="form-control input-sm" required />           
+                   </div>
+              </div>
+            </div>
+             <div class="modal-footer">
+            <button type="submit" id="editclientbtn" class="btn btn-primary" ng-disabled="editClientForm.$invalid">
+              <sapn ng-show="!isSaving"> Save Changes </sapn>
+              <span ng-show="isSaving"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+            </button>
+            <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>         
+  </div>
+</div>
+
+<div class="modal fade" id="statementModal"  role="dialog">
+    <div class="pdf-path pull-right">
+        <button type="button" class="btn btn-primary"  ng-click="print('statementModal');hideShowModal('#statementModal')"> <i class="fa fa-print"></i></button>
+          <button type="button" class="btn btn-default"  data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-dialog modal-lg" style="margin-top:2%">
+    <div class="modal-content " style="overflow:hidden">
+      <div class="modal-header">
+          <div style="position:absolute;left:80%;font-size:10px;">{{cur_date_}} {{totime()}}</div>
+          <h4 class="modal-title text-center"><span>{{cmp.cmp_name}}</span> <br>
+            <span style="font-size:12px;">{{cmp.cmp_addr}} , Phone : {{cmp.cmp_phone}}</span>
+          </h4>
+      </div>
+      <div class="modal-body " >
+          <span>Loan# : {{oneClientLoans[0].client_acc}}</span><br>
+            Loan Name : <strong class="text-center">  {{clickedDetails.first_name | uppercase}} {{clickedDetails.last_name | uppercase}}</strong>
+              <div class="row invoice-box" >
+                      <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <tbody>
+                           <tr class="top">
+                            <td>Realese Date</td>
+                            <td>{{oneClientLoans[0].r_start_date | date}}</td>
+                            <td>End  Date</td>
+                            <td>{{oneClientLoans[0].r_end_date | date}}</td>
+                          </tr>
+                          <tr class="item">
+                            <td><small>Loan principal</small></td>
+                            <td style="text-align:right">{{0+oneClientLoans[0].loan_amount | number:2}}</td>
+                            <td ><small>Interest rate</small></td>
+                            <td> {{oneClientLoans[0].loan_rate}} %</td>
+                          </tr>
+                          <tr class="item">
+                            <td><small>Loan Duration</small></td>
+                            <td><i>{{oneClientLoans[0].duration}}</i></td>
+                            <td><small>No. Installments</small></td>
+                            <td>{{oneClientLoans[0].installments}}</td>
+                           </tr>
+                           <tr class="item">
+                            <td><small>Penalty</small></td>
+                            <td style="text-align:right">{{oneClientLoans[0].penalty | number:2}} </td>
+                            <td><small>Fees</small></td>
+                            <td style="text-align:right">{{0+clickedDetails.joining_fees | number:2}}</td>
+                           </tr>
+                           <tr class="item">
+                            <td><small>Loan Due</small></td>
+                            <td style="text-align:right">{{oneClientLoans[0].loan_amount + oneClientLoans[0].interest | number:2}}</td>
+                            <td><small>Loan Paid</small></td>
+                            <td style="text-align:right">{{0+oneClientLoans[0].t_paid | number:2}}</td>
+                           </tr>
+                          <tr class="total"><td  colspan="3" class="text-center" style="text-align:center"><strong>Balance</strong></td><td style="text-align:right">Tsh : {{0+oneClientLoans[0].penalty+oneClientLoans[0].balance - oneClientLoans[0].penalt_balance | number:2}} </td></tr>
+                        </tbody>
+                   </table>
+              </div> 
+             <div class="col-sm-12 col-md-12 col-lg-12 col-xm-12" >
+               <h5>Repayments</h5>
+                  <table class="table" cellpadding="0" cellspacing="0">
+                    <thead>
+                      <tr class="heading">
+                        <th>Trans#</th>
+                        <th>Returned date</th>
+                        <th>Returned Amount</th>
+                        <th>Balance</th>
+                        <th>Repaid by</th>
+                        <th>Received By</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="stm in trans_loaded " class="item">
+                        <td>{{stm.trans_id}}</td>
+                        <td>{{stm.date }}</td>
+                        <td style="text-align:right">{{stm.trans_amount | number:2}}</td>
+                        <td style="text-align:right">{{stm.balanc_amount | number:2}}</td>
+                        <td style="text-align:center">{{stm.repaidby}}</td> 
+                        <td style="text-align:center">{{stm.assignby}}</td>                  
+                      </tr>
+                    </tbody>
+                  </table>
+                <span class="message padding" ng-show="trans_loaded.length <=0" ng-class="{'pdf-path':trans_loaded.length > 0}"> No transanctions founds</span>
+                    <!--<div style="text-align:center" rd-loading ng-show="returns.length <='0'"></div>-->
+             </div>
+              </div> 
+        </div>  
+              <span class="salt-print"><div class="alert alert-info text-center salt-print" style="padding:2px;">
+                  <div style="text-align:center"><span>{{cmp.saltation}}</span></div>
+              </div></span>
+    
+        <div class="modal-footer pdf-path">
+          <button type="button" class="btn btn-default"  data-dismiss="modal">Cancel</button>
+        </div>
+    </div> 
+     </div>        
+  </div>
+
+
+  <div class="modal fade" id="classesStreemModal" role="dialog" ng-controller="authCtrl" ng-init="getNewArray(cache.recordValue,cache.results,'c');">
+      <div class="modal-dialog modal-xl" style="min-width:{{getwidth}}px">
+        <div class="modal-content" >
+          <div class="modal-header">
+              <h4 class="modal-title">New Record</h4>
+          </div>
+            <form name="addClientForm" ng-submit="saveData('saveclassData',cache.results)" novalidate>
+             <div class="modal-body" style="min-height:{{getheight}}px;max-height:{{getheight}}px;overflow:auto;">
+                  <section id="more_details" style="margin-top:-2em">
+                    <div class="row" > 
+                     <div class="padding">
+                      <!-- <hr/> -->
+                      <div class="padding col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12">
+                          <h4 class="text-info" style="padding-left:2%;position:fixed">Class / Streem Details</h4>
+                       <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 col-xl-4" style="margin-top:4em">
+                         <div style="position:fixed">
+                          <select class="full-size form-control" ng-model="cache.recordValue"  ng-change="getNewArray(cache.recordValue,cache.results,'c')">
+                              <option value="Class">Class</option>
+                              <option value="Streem">Streem</option>
+                            </select> 
+                            <div class="padding">
+                                <span style="margin-left:20%;margin-top:20%" ng-click="getNewArray(cache.recordValue,cache.results,'c')"><button type="button"  class="btn btn-info btn-sm" >New Record <i class="fa fa-arrow-right fa-spin-right"></i></button></span>
+                            </div>
+                          </div>
+                       </div>
+                       <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12 col-xl-8 col-md-8-offset-2 col-lg-8-offset-2">
+                         <h4 style="position:fixed;margin-top:2em">Records List(s)</h4>
+                          
+                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12" style="margin-top:5em">
+                          <div class="alert alert-info">
+                           <table class="table table-bordered table-striped table-hover" >
+                              <tbody>
+                                  <tr ng-repeat="record in cache.results">
+                                    <td>
+                                        <label>{{record.name}} </label>
+                                    </td>
+                                    <td colspan="2" style="margin-left:10%;width:50%">
+                                        <input type="text" remove-Qoutes ng-model="record.name_no" placeholder="Enter {{record.bname}} name" class="form-control input-sm" />
+                                    </td>
+                                    <td title="Remove from list">
+                                      <span style="margin-left:20%;"><span class="btn btn-default btn-sm" ng-click="removeFromList(record,cache.results)"><i class="fa fa-minus text-danger"></i></span></span>
+                                    </td>
+                                  </tr>
+                             </tbody>
+                          </table>
+                        </div>
+
+                      </div>
+                         
+                      </div>
+                    </div> 
+                      
+                    </div>
+                   
+                  </div>
+                  </section>
+                  
+               </div>
+              <div class="modal-footer">
+                <button type="submit" id="newrecords" class="btn btn-primary" ng-disabled="!cache.results || cache.results.length=='0'">
+                  <sapn ng-show="!cache.savingData"> Save records </sapn>
+                  <span ng-show="cache.savingData"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+                </button>
+                <button ng-mouseenter="loadClass();"  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>         
+      </div>
+
+      <div class="modal fade" id="subjectModal" role="dialog" ng-controller="authCtrl" ng-init="getNewArray(cache.recordValues,cache.subjects,'s');loadClass();">
+          <div class="modal-dialog modal-xl" style="min-width:{{getwidth}}px">
+            <div class="modal-content" >
+              <div class="modal-header">
+                  <h4 class="modal-title">New Record</h4>
+              </div>
+                <form name="addClientForm" ng-submit="saveData('saveSubjectData',cache.subjects)" novalidate>
+                 <div class="modal-body" style="min-height:{{getheight}}px;max-height:{{getheight}}px;overflow:auto;">
+                      <section id="more_details" style="margin-top:-2em">
+                        <div class="row" > 
+                         <div class="padding">
+                          <!-- <hr/> -->
+                          <div class="padding col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12">
+                              <h4 class="text-info" style="padding-left:2%;position:fixed">Subjects / Courses Details</h4>
+                           <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 col-xl-4" style="margin-top:4em">
+                             <div style="position:fixed">
+                              <select class="full-size form-control" ng-model="cache.recordValues"  ng-change="getNewArray(cache.recordValues,cache.subjects,'s')">
+                                  <option value="All class">All class</option>
+                                  <option ng-repeat="streem in cache.allClass track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                </select> 
+                                <div class="padding">
+                                    <span style="margin-left:20%;margin-top:20%" ng-click="getNewArray(cache.recordValues,cache.subjects,'s')"><button type="button"  class="btn btn-info btn-sm" >New Record <i class="fa fa-arrow-right fa-spin-right"></i></button></span>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12 col-xl-8 col-md-8-offset-2 col-lg-8-offset-2">
+                             <h4 style="position:fixed;margin-top:2em">Records List(s)</h4>
+                              
+                             <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12" style="margin-top:5em">
+                              <div class="alert alert-info">
+                               <table class="table table-bordered table-striped table-hover" >
+                                  <tbody>
+                                      <tr ng-repeat="record in cache.subjects">
+                                        <td style="width:40%">
+                                            <label>{{record.s_name | eachword}} </label>
+                                        </td>
+                                        <td colspan="2" style="margin-left:10%;width:50%">
+                                            <input type="text" remove-Qoutes ng-model="record.s_name_no" placeholder="Enter subject name" class="form-control input-sm" />
+                                        </td>
+                                      <td>
+                                          <label>Streem </label>
+                                      </td>
+                                      <td colspan="2" style="margin-left:10%;width:50%">
+                                          <select ng-model="record.streems" ng-change="returnValue(record.streems)">
+                                              <option value="All">All</option>
+                                              <option value="{{streem.class_name}}" ng-repeat="streem in cache.allStreem track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                          </select>
+                                      </td>
+                                        <td title="Remove from list">
+                                          <span style="margin-left:20%;"><span class="btn btn-default btn-sm" ng-click="removeFromList(record,cache.subjects)"><i class="fa fa-minus text-danger"></i></span></span>
+                                        </td>
+                                      </tr>
+                                 </tbody>
+                              </table>
+                            </div>
+
+                          </div>
+                             
+                          </div>
+                        </div> 
+                          
+                        </div>
+                       
+                      </div>
+                      </section>
+                      
+                   </div>
+                  <div class="modal-footer">
+                    <button type="submit" id="newrecords" class="btn btn-primary" ng-disabled="!cache.subjects || cache.subjects.length=='0'">
+                      <sapn ng-show="!cache.savingData"> Save records </sapn>
+                      <span ng-show="cache.savingData"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+                    </button>
+                    <button ng-mouseenter="loadSubjects();" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </form>
+              </div>
+            </div>         
+          </div>
+
+
+          <div class="modal fade" id="studentsModal" role="dialog" ng-controller="authCtrl" ng-init="getNewArray(cache.studentsValues,cache.students,'std');">
+            <div class="modal-dialog modal-xl" style="min-width:{{getwidth+100}}px">
+              <div class="modal-content" >
+                <div class="modal-header">
+                    <h4 class="modal-title">New Record<span ng-show="cache.students.length > 1">s</span></h4>
+                </div>
+                  <form name="addStudentsForm" ng-submit="saveData('saveStudents',cache.students);" novalidate>
+                    <div class="modal-body" style="min-height:{{getheight}}px;max-height:{{getheight}}px; overflow: auto;">
+                        <section id="more_details" style="margin-top:-2em">
+                          <div class="row" > 
+                           <div class="padding">
+                            <!-- <hr/> -->
+                            <span class="padding"><h4 class="text-info" style="padding-left:2%;position:fixed">Student<span ng-show="cache.students.length > 1">s</span> Details</h4></span>                                
+                             <div class"padding col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12">
+                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 col-xl-3" style="margin-top:4em;margin-left:50%">
+                                <div class="alert alert-info btn btn-default" style="cursor:pointer" ng-click="getNewArray(cache.studentsValues,cache.students,'std');gotoDiv(cache.students[0].std_id)" ng-show="cache.students.length<=0" style="text-align:center">
+                                     Click new to record student
+                                </div>
+                              </div>
+                             </div>
+                            <div class="padding col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12" ng-repeat="record in cache.students" id="anchor{{record.std_id}}" >
+                             <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 col-xl-3" style="margin-top:4em">
+                               <div title="Click to upload Picture">
+                                <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                                ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                                ngf-resize="{width: 50, height: 50}"style="cursor:pointer">
+                                <img ng-show="!file" src="http://localhost:6121/uploads/images/avatar.jpg" class="img-responsive img-thumbnail" width="50px" height="50px">
+                                <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="50px" height="50px">
+                               </div>
+                                </div>
+                             </div>
+                             <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12 col-xl-8 col-md-8-offset-2 col-lg-8-offset-2">
+                               <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12" >
+                                  <span style="position:absolute;left:1%;top:-2.5%" class="btn btn-default btn-sm" ng-click="removeFromList(record,cache.students)"><i class="fa fa-close text-danger">X</i></span>
+                                 
+                                  <div class="alert alert-info">
+                                 <table  >
+                                    <tbody>
+                                        <tr>
+                                            <td style="width:20%">
+                                                 
+                                              </td>
+                                              <td></td>
+                                              <td></td>
+                                              <td style="text-align:center"> <label>{{record.lbl0 | eachword}} </label></td>
+                                             <td colspan="2" title="Enter student reg no">
+                                                  <input type="text" remove-Qoutes ng-model="record.std_rgNo" placeholder="Student No." class="form-control input-sm" required focus/>
+                                              </td>
+                                            </tr>
+                                      <tr>
+                                        <td style="width:20%">
+                                              <label>{{record.lbl1 | eachword}} </label>
+                                          </td>
+                                         <td colspan="2">
+                                              <input type="text" remove-Qoutes ng-model="record.std_fname" placeholder="First name" class="form-control input-sm"  required/>
+                                          </td>
+                                          <td colspan="2">
+                                            <input type="text" remove-Qoutes ng-model="record.std_m_name" placeholder="Middle name" class="form-control input-sm"required />
+                                         </td>
+                                          <td colspan="2">
+                                            <input type="text" remove-Qoutes ng-model="record.std_lname" placeholder="Last name" class="form-control input-sm" required />
+                                        </td>
+                                       
+                                        </tr>
+                                        <tr>
+                                          <td style="width:20%">
+                                                <label>{{record.lbl2 | eachword}} </label>
+                                            </td>
+                                            <td colspan="2" >
+                                                <select class="form-control input-sm" ng-model="record.gender" ng-change="returnValue(record.gender)">                                                         
+                                                    <option value="-select-">-select-</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Male">Male</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:20%;text-align:center" >
+                                                <label >{{record.bdt | eachword}} </label>
+                                            </td>
+                                            <td colspan="2" title="Select birth date"> <input type="date" remove-Qoutes ng-model="record.std_bdate"  class="form-control input-sm" aria-required="*" required/></td>
+                                         
+                                      </tr>
+                                      <tr>
+                                          <td style="width:20%">
+                                                <label>{{record.lbl3 | eachword}} </label>
+                                            </td>
+                                           <td colspan="2">
+                                                <input type="text" remove-Qoutes ng-model="record.city" placeholder="City" class="form-control input-sm" />
+                                            </td>
+                                            <td colspan="2">
+                                              <input type="text" remove-Qoutes ng-model="record.rgn" placeholder="Region" class="form-control input-sm" />
+                                           </td>
+                                            <td colspan="2">
+                                              <input type="text" remove-Qoutes ng-model="record.str" placeholder="Street" class="form-control input-sm" />
+                                          </td>
+                                         
+                                      </tr>
+                                      <tr>
+                                        <td style="width:20%">
+                                              <label>{{record.lbl4 | eachword}} </label>
+                                          </td>
+                                          <td ng-show="record.admision=='New'"></td>
+                                          <td colspan="3" ng-show="record.admision=='New'">
+                                              <select class="form-control input-sm" ng-model="record.admision" ng-change="returnValue(record.admision)"> 
+                                                  <option value="New">New </option>
+                                                  <option value="Transfer">Transfer</option>
+                                            </select>
+                                         <td colspan="2" ng-show="record.admision=='Transfer'">
+                                            <select class="form-control input-sm" ng-model="record.admision" ng-change="returnValue(record.admision)"> 
+                                                <option value="New">New </option>
+                                                <option value="Transfer">Transfer</option>
+                                            </select>
+                                          </td>
+                                          <td colspan="2" ng-show="record.admision=='Transfer'">
+                                            <input type="text" remove-Qoutes ng-model="record.from" placeholder="From" class="form-control input-sm" />
+                                         </td>
+                                          <td colspan="2">
+                                            <input type="text" remove-Qoutes ng-model="record.adminNo" placeholder="Admition No" class="form-control input-sm" />
+                                        </td>
+                                        
+                                       
+                                    </tr>
+                                   
+                                  <tr>
+                                    <td style="width:20%">
+                                          <label>{{record.lbl5 | eachword}} </label>
+                                      </td>
+                                     <td colspan="2">
+                                        <select class="form-control input-sm" ng-model="record.classes" ng-change="returnValue(record.classes)">
+                                            <option value="-select-">-select-</option>
+                                              <option  ng-repeat="streem in cache.allClass track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                          </select> 
+                                      </td>
+                                      <td colspan="2">
+                                          <select class="form-control input-sm" ng-model="record.streems" ng-change="returnValue(record.streems)">
+                                              <option value="-streem-">-streem-</option>
+                                              <option  ng-repeat="streem in cache.allStreem track by $index" value="{{streem.class_name}}">{{streem.class_name | eachword}}</option>
+                                          </select>
+                                     </td>
+                                      <td colspan="2" title="Select registration date">
+                                        <input type="date" remove-Qoutes ng-model="record.std_rgdate"  class="form-control input-sm" required />
+                                    </td>
+                                   
+                                </tr>
+                                   </tbody>
+                                </table>
+                              </div>
+                            </div>
+                               
+                            </div>
+                          </div> 
+                            
+                          </div>
+                         
+                        </div>
+                        </section>
+                        <span style="margin-top:-1.5em" class="pull-right bottom-btn" ng-click="getNewArray(cache.studentsValues,cache.students,'std');gotoDiv(cache.students[0].std_id)"><button type="button"  class="btn btn-info btn-sm" ><i class="fa fa-user fa-spin-right"></i> New </button></span>
+                     </div>
+                   
+                    <div class="modal-footer">
+                      <span class="pull-left text-info"> Total student<span ng-show="cache.students.length > 1">s</span> {{cache.students.length}}</span>
+                      <button type="submit" id="newrecords" class="btn btn-primary" ng-disabled="!cache.students || cache.students.length=='0' || addStudentsForm.$invalid ">
+                        <sapn ng-show="!cache.savingStudents"> Save record<span ng-show="cache.students.length > 1">s</span> </sapn>
+                        <span ng-show="cache.savingStudents"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+                      </button>
+                      <button ng-mouseenter="loadStudents(ChildViewPage,cache.streemValue,cache.yearValue)" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+                </div>
+              </div>         
+            </div>
+
+            <div class="modal fade" id="studentsMarkModal" role="dialog" ng-controller="authCtrl" ng-init="loadSubjects();getNewArray('Kiswahili',cache.marks,'mark');">
+              <div class="modal-dialog modal-xl" style="min-width:{{getwidth+100}}px">
+                <div class="modal-content" >
+                  <div class="modal-header">
+                      <h4 class="modal-title">New Record<span ng-show="cache.marks.length > 1">s</span></h4>
+                  </div>
+                    <form name="addmarksForm" ng-submit="saveMarks('saveMarkData',cache.marks);" novalidate>
+                      <div class="modal-body" style="min-height:{{getheight}}px;max-height:{{getheight}}px; overflow: auto;">
+                          <section id="more_details" style="margin-top:-2em">
+                            <div class="row" > 
+                             <div class="padding">
+                              <!-- <hr/> -->
+                              <!-- {{cache.clickedData}} -->
+                              <span class="padding"><h4 class="text-info" style="padding-left:2%;position:fixed">{{cache.clickedData.first_name | eachword}} {{cache.clickedData.last_name | eachword}}</h4></span>
+                              <div class="padding col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12" >
+                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 col-xl-3" style="margin-top:4em">
+                                 <div style="position:fixed">
+                                   <div title="Click to upload Picture">
+                                    <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                                    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="50"
+                                    ngf-resize="{width: 50, height: 50}"style="cursor:pointer">
+                                    <img ng-show="!file" src="http://localhost:6121/uploads/images/avatar.jpg" class="img-responsive img-thumbnail" width="50" height="50">
+                                    <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="50" height="50">
+                                   </div>
+                                   </div>
+                                   <div class="padding">
+                                     <div>
+                                        <label>Select Terms</label>
+                                     </div>
+                                     <label> 
+                                      <select ng-model="cache.marksValues" class="form-control input-sm" ng-change="returnValue(cache.marksValues);getDataMark(cache.clickedData);">
+                                          <option value="Annual Term">Annual Term</option>
+                                          <option value="Terminal Term">Terminal Term</option>
+                                          <option value="Mid 1 Term">Mid 1 Term</option>
+                                          <option value="Mid 2 Term">Mid 2 Term</option>
+                                          <option value="Monthly Test">Monthly Test</option>
+                                          <option value="Weekly Test">Weekly Test</option>
+                                          <!-- <option ng-repeat="subj in cache.allsubjects track by $index" value="{{subj.class_name}}">{{subj.subject_name | eachword}}</option> -->
+                                      </select>
+                                  </label>
+                                </div>
+                                <div class="padding">
+                                    <div>
+                                       <label>Select Subject</label>
+                                    </div>
+                                    <label> 
+                                     <select multiple  class="form-control input-sm opt"  style="min-height:130px;overflow:auto">
+                                      <option ng-repeat="subj in cache.allsubjects track by $index" ng-click="getNewArray(subj.subject_name,cache.marks,'mark');gotoDiv('0')" value="{{subj.subject_name}}">{{subj.subject_name | eachword}}</option>
+                                     </select>
+                                 </label>
+                               </div>
+                                  </div>
+                               </div>
+                               <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12 col-xl-8 col-md-8-offset-2 col-lg-8-offset-2">
+                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-xl-12"  >
+                                   <h4 style="position:fixed;right:2.5em;top:2px" class="text-info">{{cache.marksValues}} Remarks</h4>
+                                  <div class="alert alert-info" style="margin-top:2.5em:">
+                                      <table  class="table table-bordered table-striped table-hover">
+                                          <thead>
+                                          <tr>
+                                            <th style="width:10%">Subject</th>
+                                            <th style="text-align:center">Marks</th>
+                                            <th style="text-align:center">Grade</th>
+                                            <th>Action</th>
+                                          </tr>
+                                          </thead>
+                                      <tbody>
+                                        <!-- {{cache.marks.terms_type_s}} -->
+                                          <tr ng-repeat="record in cache.marks" id="anchor{{record.accs_id}}">
+                                              <td>
+                                                  <label>{{record.subject_mark_s | eachword}}</label>
+                                              </td>
+                                              <td>
+                                                  <input type="text" style="text-align:center" maxlength="3" remove-Qoutes only-Digits ng-model="record.marks_s" placeholder="Enter marks" class="form-control input-sm" ng-change="checkGrades(record,cache.marks)" required focus/>
+                                              </td>
+                                              <td>
+                                                  <input type="text" style="text-align:center" ng-disabled="true" remove-Qoutes ng-model="record.points_mark" placeholder="Grade" class="form-control input-sm" required/>
+                                              </td>
+                                              <td title="Remove from list">
+                                                <span style="margin-left:20%;"><span class="btn btn-default btn-sm" ng-click="removeFromList(record,cache.marks)"><i class="fa fa-minus text-danger"></i></span></span>
+                                              </td>
+                                            </tr>
+                                         
+                                     </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                                 
+                              </div>
+                            </div> 
+                              
+                            </div>
+                           
+                          </div>
+                          </section>
+                       </div>
+                     
+                      <div class="modal-footer">
+                        <span class="pull-left text-info"> Total record<span ng-show="cache.marks.length > 1">s</span> {{cache.marks.length}}</span>
+                        <button type="submit" id="newrecords" class="btn btn-primary" ng-disabled="!cache.marks || cache.marks.length=='0' || addmarksForm.$invalid ">
+                          <sapn ng-show="!cache.savingMarkData"> Save record<span ng-show="cache.marks.length > 1">s</span> </sapn>
+                          <span ng-show="cache.savingMarkData"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+                        </button>
+                        <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>         
+              </div>
+
+
+              <div class="modal fade" id="studentsBioModal" role="dialog" ng-controller="authCtrl">
+                <div class="modal-dialog modal-xl" style="min-width:{{getwidth+50}}px">
+                  <div class="modal-content padding" >
+                    <div class="modal-header">
+                        <h5 class="modal-title ">Student Biograph</h5>
+                    </div>
+                    <form name="companyForm" class="form-horizontal" role="form">
+                        <div class="modal-body" style="min-height:{{getheight}}px; overflow-y: auto;">
+                        
+                            <div class="row" ng-show="hidePageNotClickedST('student')">
+                                <h5 class="text-info">Primary Info</h5>
+                                    <div style="position:absolute;right:10%;" title="Click to upload Picture">
+                                      <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                                      ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                                      ngf-resize="{width: 100, height: 100}"style="cursor:pointer">
+                                      <img ng-show="!file" src="http://localhost:6121/uploads/images/avatar.jpg" class="img-responsive img-thumbnail" width="100px" height="100px">
+                                      <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="100px" height="100px">
+                                     </div>
+                                    </div>
+                                    <div class="col-sm-10 col-md-10 col-lg-10">
+                                  
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="email"> Student name : </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control"  name="c_name" remove-Qoutes placeholder="Student Name" ng-model="cmp.cmp_name" required />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label class="col-sm-3 control-label no-padding-right" for="Address"> Gender:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="Address" remove-Qoutes placeholder="Gender"  ng-model="cmp.cmp_addr" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label class="col-sm-3 control-label no-padding-right" for="Address"> Age:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="Address" remove-Qoutes placeholder="Age"  ng-model="cmp.cmp_addr" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label class="col-sm-3 control-label no-padding-right" for="Address"> Reg No:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="Address" remove-Qoutes placeholder="Reg no"  ng-model="cmp.cmp_addr" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="address"> Form / Standard:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="address" remove-Qoutes placeholder="Form / Standard" ng-model="cmp.cmp_phone" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="message"> Year of study:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="message" remove-Qoutes placeholder="Year of study" ng-model="cmp.saltation" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="message"> Faculty:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="message" remove-Qoutes placeholder="Faculty" ng-model="cmp.saltation" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- <div>
+                                               <button id="updProfile" class="btn btn-sm btn-primary pull-right"  ng-click="saveProfile(cmp)"  ng-disabled="companyForm.$invalid">Create profile</button> 
+                                            </div> -->
+                                        <a   ng-click="clickedPageST('studentMore')" class="pull-right">More Info</a>
+                                      </div>
+                                </div>
+                        
+                                  <div class="row" ng-show="hidePageNotClickedST('studentMore')" >
+                                      <h5 class="text-info">More student's parent info</h5>
+                                      <div style="position:absolute;right:10%;" title="Click to upload Picture">
+                                        <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                                        ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                                        ngf-resize="{width: 100, height: 100}"style="cursor:pointer">
+                                        <img ng-show="!file" src="http://localhost:6121/uploads/images/avatar.jpg" class="img-responsive img-thumbnail" width="100px" height="100px">
+                                        <img ng-show="file" ngf-src="file" class="img-responsive img-thumbnail" width="100px" height="100px">
+                                       </div>
+                                      </div>
+                                       <div class="padding"  >
+                                          <div class="col-sm-10 col-md-10 col-lg-10">
+                                            <div ng-show="!isNext"  >
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="email"> Country: </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="email" class="form-control"  name="cm_name" remove-Qoutes placeholder="Country" ng-model="cmp.Email_address" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="email"> Region/Council: </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="email" class="form-control"  name="cm_name" remove-Qoutes placeholder="Region/Council" ng-model="cmp.Email_address" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="email"> Street/Village: </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="email" class="form-control"  name="cm_name" remove-Qoutes placeholder="Physical address" ng-model="cmp.Email_address" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label class="col-sm-3 control-label no-padding-right" for="Address"> Phone number:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control passCheck" remove-Qoutes name="pass1"  placeholder="Phone number"  ng-model="cmp.email_password" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                              <label class="col-sm-3 control-label no-padding-right" for="Address"> Address  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="password" class="form-control passCheck" remove-Qoutes name="pass2"  placeholder="Address"  ng-model="cmp.email_password2"  />
+                                                         
+                                                    </span> 
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div ng-show="!isNext">
+                                             <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="address"> Work:  </label>
+                                                <div class="col-sm-7">
+                                                   <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" name="address" placeholder="Work" ng-model="cmp.subject_mail" required/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                           
+                                             </div>
+                                             <a  ng-click="clickedPageST('student')">Back</a>
+                                          </div>
+                                      </div>  
+                                </div> 
+                         </div>
+                       
+                        <div class="modal-footer">
+                          <button type="submit" id="newrecords" class="btn btn-primary" ng-disabled="!cache.marks || cache.marks.length=='0' || addmarksForm.$invalid ">
+                            <sapn ng-show="!cache.savingMarkData"> Update record<span ng-show="cache.marks.length > 1">s</span> </sapn>
+                            <span ng-show="cache.savingMarkData"> <i class="fa fa-spinner fa-spin"></i> <span> Saving ...</span></span>
+                          </button>
+                          <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>         
+                </div>
+
+
+
+                <div class="modal fade" id="paymentsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" ng-controller="authCtrl">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                             {{cache.payTitle}} Details
+                          </div>
+                      <div class="panel-body">
+                         <div class="modal-dialog">
+                            <div class="modal-content">
+                               <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                  <h4 class="modal-title" id="myModalLabel">Please fill payments details</h4>
+                               </div>
+                              <div class="modal-body">
+                                  <form name="paymentForm" class="form-horizontal" role="form">
+                                      <div class="form-group" ng-controller="numberFormatCtrl">
+                                          <label class="col-sm-4 control-label no-padding-right" for="phone"> Phone Number : </label>
+                                          <div class="col-sm-6">
+                                             <span class="block input-icon input-icon-right">
+                                                  <input type="text" class="form-control  input-sm" placeholder="Enter phone number" name="phone" ng-model="cache.payments.number"  maxlength="13"  required focus/>
+                                                  <!-- <i class="ace-icon fa fa-user"></i> -->
+                                              </span>
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="form-group" >
+                                        <label class="col-sm-4 control-label no-padding-right" for="phone"> PIN Code : </label>
+                                        <div class="col-sm-6">
+                                           <span class="block input-icon input-icon-right">
+                                                <input type="password" class="form-control  input-sm" placeholder="Enter PIN code " name="code" ng-model="cache.payments.pincode"   required />
+                                                <!-- <i class="ace-icon fa fa-user"></i> -->
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                      <div class="form-group" ng-controller="numberFormatCtrl">
+                                          <label class="col-sm-4 control-label no-padding-right" for="amount"> Amount : </label>
+                                          <div class="col-sm-6">
+                                             <span class="block input-icon input-icon-right">
+                                                  <input type="text" only-Digits class="form-control  input-sm" style="text-align:right" placeholder="amount" cleave="options.numeral" ng-model="cache.payments.amount" ng-change="sumValues(cache.payments.amount,0)" required/>
+                                                  <!-- <i class="ace-icon fa fa-lock"></i> -->
+                                              </span>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label class="col-sm-4 control-label no-padding-right" for="balance"> Balance : </label>
+                                          <div class="col-sm-6">
+                                             <span class="block input-icon input-icon-right">
+                                                  <input type="text" only-Digits class="form-control input-sm" style="text-align:right" placeholder="Balance" ng-disabled="true" ng-model="cache.payments.balance" required/>
+                                                  <!-- <i class="ace-icon fa fa-lock"></i> -->
+                                              </span>
+                                          </div>
+                                      </div>
+                                     
+                                          <div class="space-4"></div>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary" ng-disabled="paymentForm.$invalid || cache.payments.number.length<10" ng-click="savePayments(cache.payments)">
+                                      <span ng-show="!cache.isUthenticatingPay"> Confirm </span>
+                                      <span ng-show="cache.isUthenticatingPay"> <i class="fa fa-spinner fa-spin f14"></i> Saving  ...  </span> 
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  </div>
+
+                   <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" ng-controller="authCtrl">
+                      <div class="panel panel-primary">
+                          <div class="panel-heading">
+                               {{cache.payTitle}} Details
+                               <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">×</button>
+                               <input type="text" class="form-control input-sm" style="width:30%;margin-left:50%;position:absolute;margin-top:-2em"  placeholder="Type here to search .." name="email" ng-model="search" required focus/>
+                              
+                            </div>
+                        <div class="panel-body">
+                          <div class="padding">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>TransNo</th>
+                                                    <th>Trans Type</th>
+                                                    <th>Trans Amount</th>
+                                                    <th>Balance</th>
+                                                    <th>DoneBy</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="trans in cache.transHistory track by $index">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{trans.name}}</td>
+                                                    <td>{{team.phone}}</td>
+                                                    <td>{{team.email}}</td>
+                                                    <td>{{team.phone}}</td>
+                                                    <td>{{team.email}}</td>
+                                                </tr>
+                
+                                                <tr ng-show="cache.myteam.length<=0">
+                                                   <td colspan="7" style="text-align:center">
+                                                       <span ng-show="!cache.isLoadingTeam"> 
+                                                            <i class="fa fa-spinner fa-spin f14"></i>   Please wait! while loading .. </span>
+                                                       <span ng-show="cache.isLoadingTeam" class="text-danger"> No transactions history </span>
+                                                   </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                          </div>
+                          
+                      </div>
+                     </div>
+                    </div>
+
+
+
+
